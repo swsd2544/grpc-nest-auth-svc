@@ -1,10 +1,9 @@
+import { PrismaService } from './prisma.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from './service/jwt.service';
 import { AuthService } from './service/auth.service';
-import { Auth } from './auth.entity';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 
 @Module({
@@ -16,9 +15,8 @@ import { AuthController } from './auth.controller';
         signOptions: { expiresIn: config.get<string>('EXPIRES_IN') },
       }),
     }),
-    TypeOrmModule.forFeature([Auth]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtService],
+  providers: [AuthService, PrismaService, JwtService],
 })
 export class AuthModule {}

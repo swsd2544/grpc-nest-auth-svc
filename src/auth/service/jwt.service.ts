@@ -1,18 +1,14 @@
+import { PrismaService } from '../prisma.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService as Jwt } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Auth } from '../auth.entity';
+import { Auth } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class JwtService {
-  @InjectRepository(Auth)
-  private readonly repository: Repository<Auth>;
-
   private readonly jwt: Jwt;
 
-  constructor(jwt: Jwt) {
+  constructor(jwt: Jwt, private readonly prisma: PrismaService) {
     this.jwt = jwt;
   }
 
@@ -23,7 +19,7 @@ export class JwtService {
 
   // Get User by User ID we get from decode()
   public async validateUser(decoded: any): Promise<Auth> {
-    return this.repository.findOne({ where: { id: decoded.id } });
+    return this.prisma.auth.findUnique({ where: { id: decoded.id } });
   }
 
   // Generate JWT Token
