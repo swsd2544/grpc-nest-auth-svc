@@ -1,4 +1,4 @@
-import { PrismaService } from './prisma.service';
+import { PrismaService } from './service/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from './service/jwt.service';
 import { AuthService } from './service/auth.service';

@@ -1,4 +1,4 @@
-import { PrismaService } from './auth/prisma.service';
+import { PrismaService } from './auth/service/prisma.service';
 import { HttpExceptionFilter } from './auth/filter/http-exception.filter';
 import { protobufPackage } from './auth/auth.pb';
 import { NestFactory } from '@nestjs/core';
