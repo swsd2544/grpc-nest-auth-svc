@@ -1,5 +1,5 @@
 import { PrismaService } from './service/prisma.service';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService, ConfigModule } from '@nestjs/config';
 import { JwtService } from './service/jwt.service';
 import { AuthService } from './service/auth.service';
 import { Module } from '@nestjs/common';
@@ -9,6 +9,7 @@ import { AuthController } from './auth.controller';
 @Module({
   imports: [
     JwtModule.registerAsync({
+      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('SECRET'),
